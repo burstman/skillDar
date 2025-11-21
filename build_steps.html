@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Steps to Build Android APK for SkillKonnect App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        h2 { color: #555; }
+        ol { line-height: 1.6; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; }
+        p { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Steps to Build Android APK for SkillKonnect App</h1>
+    <p>Follow these steps to build your Fyne app into an Android APK. This assumes you're on Linux with Go installed.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Go 1.24+ installed.</li>
+        <li>Internet connection for downloads.</li>
+        <li>About 2-3 GB free space for Android SDK.</li>
+    </ul>
+
+    <h2>Step-by-Step Build Process</h2>
+    <ol>
+        <li><strong>Install Java (required for Android SDK tools)</strong><br>
+            The Android build tools are Java-based, so we need JDK 17.<br>
+            <pre>sudo apt update && sudo apt install -y openjdk-17-jdk</pre>
+        </li>
+        <li><strong>Set up Android SDK directory and download command line tools</strong><br>
+            <pre>mkdir -p ~/android-sdk
+wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O ~/android-sdk/cmdline-tools.zip
+cd ~/android-sdk
+unzip cmdline-tools.zip
+mv cmdline-tools cmdline-tools-temp
+mkdir cmdline-tools
+mv cmdline-tools-temp cmdline-tools/latest</pre>
+        </li>
+        <li><strong>Set environment variables</strong><br>
+            Add these to your shell (or ~/.bashrc for permanence):<br>
+            <pre>export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export ANDROID_HOME=~/android-sdk
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0</pre>
+        </li>
+        <li><strong>Accept Android SDK licenses</strong><br>
+            <pre>yes | sdkmanager --licenses</pre>
+        </li>
+        <li><strong>Install Android SDK components</strong><br>
+            <pre>sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125"</pre>
+            This downloads ~1-2 GB; it may take time.
+        </li>
+        <li><strong>Install the updated Fyne CLI tool</strong><br>
+            The old fyne CLI is deprecated.<br>
+            <pre>go install fyne.io/tools/cmd/fyne@latest
+export PATH=$PATH:~/go/bin  # Add fyne to PATH</pre>
+        </li>
+        <li><strong>Create an app icon (required for packaging)</strong><br>
+            Fyne needs a PNG icon. Create a 512x512 PNG and save as <code>Icon.png</code> in your project root.
+        </li>
+        <li><strong>Build the APK</strong><br>
+            In your project directory:<br>
+            <pre>fyne package --os android --app-id com.skillkonnect.app</pre>
+            This generates <code>skillKonnectApp.apk</code> (~116MB).
+        </li>
+    </ol>
+
+    <h2>Notes</h2>
+    <ul>
+        <li>The app ID <code>com.skillkonnect.app</code> is unique—change it if needed.</li>
+        <li>If you skip the icon, packaging fails.</li>
+        <li>For iOS, you'd need macOS + Xcode instead.</li>
+        <li>Test on your phone by transferring the APK and installing it.</li>
+    </ul>
+</body>
+</html>
