@@ -44,10 +44,16 @@ func main() {
 
 	// Main window
 	w := a.NewWindow("SkillKonnect")
-	w.SetMaster() // Important for mobile → makes it behave like a full-screen phone app
+	w.SetMaster() // Uncomment this for full mobile app behavior (full screen, no window borders)
 
 	// Simulate phone size on desktop (ignored on real phone)
-	w.Resize(fyne.NewSize(390, 844)) // common modern phone size
+	// Common Android phone sizes:
+	// - iPhone SE: 375x667
+	// - iPhone 12/13: 390x844
+	// - Samsung Galaxy S21: 360x800
+	// - Pixel 5: 393x851
+	// - Average Android phone: ~360-410 width, ~800-900 height
+	w.Resize(fyne.NewSize(390, 844)) // iPhone 12/13 size - good Android approximation
 
 	// UI elements
 	title := widget.NewLabel("Welcome to SkillKonnect")
@@ -74,6 +80,12 @@ func main() {
 
 	// Center everything with padding (looks great on phones)
 	w.SetContent(container.NewPadded(container.NewCenter(content)))
+
+	// Make sure window is visible
+	w.Show()
+
+	// Center the window on screen
+	w.CenterOnScreen()
 
 	// Show and run
 	w.ShowAndRun()
