@@ -12,89 +12,105 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 
-	skilltheme "skillKonnectApp/pkg/theme"
-	"skillKonnectApp/pkg/ui"
+	skilltheme "skillDar/pkg/theme"
+	uiscreen "skillDar/pkg/ui"
 )
+
+// AppState manages navigation and theme across screens
+type AppState struct {
+	app         fyne.App
+	window      fyne.Window
+	isDarkTheme bool
+	screens     map[string]fyne.CanvasObject
+	icons       map[string]fyne.Resource // Map of all app icons
+}
+
+// ShowScreen displays a screen by name with the top bar
+func (as *AppState) ShowScreen(screenName string) {
+	if screen, exists := as.screens[screenName]; exists {
+		// Wrap screen with top bar
+		layout := container.NewBorder(
+			as.createTopBar(), // Top (theme toggle)
+			nil,               // Bottom
+			nil,               // Left
+			nil,               // Right
+			screen,            // Center (screen content)
+		)
+		as.window.SetContent(layout)
+	}
+}
+
+// createTopBar builds the top navigation bar with theme toggle
+func (as *AppState) createTopBar() *fyne.Container {
+	var themeBtn *widget.Button
+	themeBtn = widget.NewButtonWithIcon("", as.icons["darkTheme"], func() {
+		as.toggleTheme()
+		themeBtn.SetIcon(as.getThemeIcon())
+	})
+	return container.NewHBox(
+		themeBtn,
+		layout.NewSpacer(),
+	)
+}
+
+// toggleTheme switches between light and dark theme
+func (as *AppState) toggleTheme() {
+	as.isDarkTheme = !as.isDarkTheme
+	fmt.Println("Theme toggled. isDarkTheme:", as.isDarkTheme)
+
+	variant := theme.VariantLight
+	if as.isDarkTheme {
+		variant = theme.VariantDark
+	}
+	as.app.Settings().SetTheme(skilltheme.NewSkillKonnectTheme(variant))
+	as.window.Content().Refresh()
+}
+
+// getThemeIcon returns the appropriate icon for current theme
+func (as *AppState) getThemeIcon() fyne.Resource {
+	if as.isDarkTheme {
+		return as.icons["lightTheme"]
+	}
+	return as.icons["darkTheme"]
+}
 
 func main() {
 	// Create the app
 	a := app.New()
+	w := a.NewWindow("SkillKonnect")
+	w.SetMaster()
+	w.Resize(fyne.NewSize(390, 844)) // iPhone 12/13 size
 
-	// Use bundled theme icons from bundle.go
-	lightIcon := resourceThemeLightlPng
-	darkIcon := resourceDarckThemePng
+	// Initialize app state
+	state := &AppState{
+		app:         a,
+		window:      w,
+		isDarkTheme: false, // Start with LIGHT theme
+		screens:     make(map[string]fyne.CanvasObject),
+		icons: map[string]fyne.Resource{
+			"lightTheme": resourceThemeLightlPng,
+			"darkTheme":  resourceDarckThemePng,
+			// Add more icons here as needed:
+			// "home":     resourceHomePng,
+			// "settings": resourceSettingsPng,
+			// "profile":  resourceProfilePng,
+		},
+	}
 
-	// Usage:
+	// Set initial theme
 	a.Settings().SetTheme(skilltheme.NewSkillKonnectTheme(theme.VariantLight))
 
-	// Main window
-	w := a.NewWindow("SkillKonnect")
-	w.SetMaster() // Uncomment this for full mobile app behavior (full screen, no window borders)
+	// Register screens
+	state.screens["welcome"] = uiscreen.CreateWelcomeScreen(state)
+	state.screens["login"] = uiscreen.CreateLoginScreen(state)
+	state.screens["main"] = uiscreen.CreateMainScreen(state)
+	state.screens["profile"] = uiscreen.CreateProfileScreen(state)
 
-	// Simulate phone size on desktop (ignored on real phone)
-	// Common Android phone sizes:
-	// - iPhone SE: 375x667
-	// - iPhone 12/13: 390x844
-	// - Samsung Galaxy S21: 360x800
-	// - Pixel 5: 393x851
-	// - Average Android phone: ~360-410 width, ~800-900 height
-	w.Resize(fyne.NewSize(390, 844)) // iPhone 12/13 size - good Android approximation
-
-	// Theme toggle setup
-	isDarkTheme := false // Start with LIGHT theme
-
-	var ThemeBtn *widget.Button
-	ThemeBtn = widget.NewButtonWithIcon("", darkIcon, func() {
-		isDarkTheme = !isDarkTheme
-		fmt.Println("Theme toggled. isDarkTheme:", isDarkTheme)
-
-		if isDarkTheme {
-			ThemeBtn.SetIcon(lightIcon)
-			a.Settings().SetTheme(skilltheme.NewSkillKonnectTheme(theme.VariantDark))
-			fmt.Println("Applied Dark theme")
-		} else {
-			ThemeBtn.SetIcon(darkIcon)
-			a.Settings().SetTheme(skilltheme.NewSkillKonnectTheme(theme.VariantLight))
-			fmt.Println("Applied Light theme")
-		}
-		w.Content().Refresh()
-	})
-
-	// Top bar with theme toggle button
-	topBar := container.NewHBox(
-		layout.NewSpacer(),
-		ThemeBtn,
-	)
-
-	// Welcome screen with "Get Started" button that opens main screen
-	welcomeScreen := ui.CreateWelcomeScreen(func() {
-		// When "Get Started" is clicked, show the main screen
-		mainScreen := ui.CreateMainScreen()
-		mainLayout := container.NewBorder(
-			topBar,     // Top (keep theme button)
-			nil,        // Bottom
-			nil,        // Left
-			nil,        // Right
-			mainScreen, // Center (main screen content)
-		)
-		w.SetContent(mainLayout)
-	})
-
-	// Initial layout with welcome screen
-	initialLayout := container.NewBorder(
-		topBar,        // Top
-		nil,           // Bottom
-		nil,           // Left
-		nil,           // Right
-		welcomeScreen, // Center (welcome screen)
-	)
-
-	w.SetContent(initialLayout)
+	// Show welcome screen first
+	state.ShowScreen("welcome")
 
 	// Make sure window is visible
 	w.Show()
-
-	// Center the window on screen
 	w.CenterOnScreen()
 
 	// Show and run

@@ -9,16 +9,18 @@ import (
 
 // CreateWelcomeScreen creates the welcome screen UI
 // onGetStarted is a callback function that runs when "Get Started" button is clicked
-func CreateWelcomeScreen(onGetStarted func()) fyne.CanvasObject {
+func CreateWelcomeScreen(state AppState) fyne.CanvasObject {
 	// UI elements
 	title := widget.NewLabel("Welcome to SkillKonnect")
-	title.Alignment = fyne.TextAlignCenter
+	title.Alignment = fyne.TextAlignLeading
 	title.TextStyle = fyne.TextStyle{Bold: true}
 
 	subtitle := widget.NewLabel("Connect skills, build networks")
 	subtitle.Alignment = fyne.TextAlignCenter
 
-	getStartedBtn := widget.NewButton("Get Started", onGetStarted)
+	getStartedBtn := widget.NewButton("Get Started", func() {
+		state.ShowScreen("login")
+	})
 
 	// Layout - vertically stacked with spacers for centering
 	content := container.NewVBox(
