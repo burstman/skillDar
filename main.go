@@ -102,6 +102,7 @@ func main() {
 
 	// Register screens
 	state.screens["welcome"] = uiscreen.CreateWelcomeScreen(state)
+	state.screens["choice"] = uiscreen.CreateChoiceScreen(state)
 	state.screens["login"] = uiscreen.CreateLoginScreen(state)
 	state.screens["main"] = uiscreen.CreateMainScreen(state)
 	state.screens["profile"] = uiscreen.CreateProfileScreen(state)

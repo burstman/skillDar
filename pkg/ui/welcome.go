@@ -11,27 +11,27 @@ import (
 // onGetStarted is a callback function that runs when "Get Started" button is clicked
 func CreateWelcomeScreen(state AppState) fyne.CanvasObject {
 	// UI elements
-	title := widget.NewLabel("Welcome to SkillKonnect")
-	title.Alignment = fyne.TextAlignLeading
+	title := widget.NewLabel("Welcome to SkillDar")
+	title.Alignment = fyne.TextAlignCenter
 	title.TextStyle = fyne.TextStyle{Bold: true}
 
-	subtitle := widget.NewLabel("Connect skills, build networks")
+	subtitle := widget.NewLabel("Your Home, Our Expertise")
 	subtitle.Alignment = fyne.TextAlignCenter
 
 	getStartedBtn := widget.NewButton("Get Started", func() {
-		state.ShowScreen("login")
+		state.ShowScreen("choice")
 	})
 
 	// Layout - vertically stacked with spacers for centering
 	content := container.NewVBox(
-		layout.NewSpacer(),
 		title,
 		subtitle,
 		layout.NewSpacer(),
 		getStartedBtn,
 		layout.NewSpacer(),
+		layout.NewSpacer(),
 	)
 
-	// Return padded and centered content
-	return container.NewPadded(container.NewCenter(content))
+	// Return padded content
+	return container.NewPadded(content)
 }
