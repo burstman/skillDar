@@ -17,13 +17,14 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	iconLabel.Alignment = fyne.TextAlignCenter
 	iconLabel.TextStyle = fyne.TextStyle{Bold: true}
 
-	headerTitle := widget.NewLabel("Your Home, Our\nExpertise.")
-	headerTitle.Alignment = fyne.TextAlignCenter
-	headerTitle.TextStyle = fyne.TextStyle{Bold: true}
+	headerTitle1 := canvas.NewText("Your Home, Our Expertise.", color.Black)
+	headerTitle1.Alignment = fyne.TextAlignCenter
+	headerTitle1.TextSize = 18
+	headerTitle1.TextStyle = fyne.TextStyle{Bold: true}
 
 	headerBox := container.NewVBox(
 		iconLabel,
-		headerTitle,
+		headerTitle1,
 	)
 
 	// Skilled Worker section
@@ -43,14 +44,15 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	})
 
 	skilledWorkerBox := container.NewVBox(
-		skilledWorkerHeader,
-		skilledWorkerDesc,
+		container.NewCenter(skilledWorkerHeader),
+		container.NewCenter(skilledWorkerDesc),
 		skilledWorkerBtn,
 	)
 
-	// Decorative rectangle (placeholder for furniture image)
-	rect := canvas.NewRectangle(color.RGBA{230, 220, 210, 255})
-	rect.SetMinSize(fyne.NewSize(0, 120))
+	// Decorative image
+	plumberImage := canvas.NewImageFromResource(state.GetImage("plumberFix"))
+	plumberImage.FillMode = canvas.ImageFillContain
+	plumberImage.SetMinSize(fyne.NewSize(390, 220))
 
 	// Client section
 	clientIcon := widget.NewLabel("🏠")
@@ -77,10 +79,10 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	// Main scrollable layout
 	content := container.NewVBox(
 		headerBox,
-		layout.NewSpacer(),
+		//layout.NewSpacer(),
 		skilledWorkerBox,
-		layout.NewSpacer(),
-		rect,
+		//layout.NewSpacer(),
+		plumberImage,
 		layout.NewSpacer(),
 		clientBox,
 	)

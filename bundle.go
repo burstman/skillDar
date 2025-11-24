@@ -15,6 +15,20 @@ var resourceDarckThemePng = &fyne.StaticResource{
 	StaticContent: resourceDarckThemePngData,
 }
 
+//go:embed assets/plumberFix.jpg
+var resourcePlumberFixJpgData []byte
+var resourcePlumberFixJpg = &fyne.StaticResource{
+	StaticName:    "assets/plumberFix.jpg",
+	StaticContent: resourcePlumberFixJpgData,
+}
+
+//go:embed assets/skilldar.png
+var resourceSkilldarPngData []byte
+var resourceSkilldarPng = &fyne.StaticResource{
+	StaticName:    "assets/skilldar.png",
+	StaticContent: resourceSkilldarPngData,
+}
+
 //go:embed assets/theme-lightl.png
 var resourceThemeLightlPngData []byte
 var resourceThemeLightlPng = &fyne.StaticResource{

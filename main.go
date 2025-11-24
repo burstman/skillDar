@@ -74,6 +74,11 @@ func (as *AppState) getThemeIcon() fyne.Resource {
 	return as.icons["darkTheme"]
 }
 
+// GetImage returns an image resource by name
+func (as *AppState) GetImage(name string) fyne.Resource {
+	return as.icons[name]
+}
+
 func main() {
 	// Create the app
 	a := app.New()
@@ -90,6 +95,7 @@ func main() {
 		icons: map[string]fyne.Resource{
 			"lightTheme": resourceThemeLightlPng,
 			"darkTheme":  resourceDarckThemePng,
+			"plumberFix": resourcePlumberFixJpg,
 			// Add more icons here as needed:
 			// "home":     resourceHomePng,
 			// "settings": resourceSettingsPng,
