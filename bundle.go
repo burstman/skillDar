@@ -8,6 +8,13 @@ import (
 	"fyne.io/fyne/v2"
 )
 
+//go:embed assets/client.jpg
+var resourceClientJpgData []byte
+var resourceClientJpg = &fyne.StaticResource{
+	StaticName:    "assets/client.jpg",
+	StaticContent: resourceClientJpgData,
+}
+
 //go:embed assets/darck-theme.png
 var resourceDarckThemePngData []byte
 var resourceDarckThemePng = &fyne.StaticResource{
@@ -27,6 +34,13 @@ var resourceSkilldarPngData []byte
 var resourceSkilldarPng = &fyne.StaticResource{
 	StaticName:    "assets/skilldar.png",
 	StaticContent: resourceSkilldarPngData,
+}
+
+//go:embed assets/skillworkers.jpg
+var resourceSkillworkersJpgData []byte
+var resourceSkillworkersJpg = &fyne.StaticResource{
+	StaticName:    "assets/skillworkers.jpg",
+	StaticContent: resourceSkillworkersJpgData,
 }
 
 //go:embed assets/theme-lightl.png

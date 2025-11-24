@@ -32,7 +32,7 @@ func CreateLoginScreen(state AppState) fyne.CanvasObject {
 		} else {
 			fmt.Println("Logged in as:", email)
 			// Navigate to main screen
-			state.ShowScreen("main")
+			state.ShowScreen("choice")
 		}
 	})
 

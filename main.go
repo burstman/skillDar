@@ -96,6 +96,7 @@ func main() {
 			"lightTheme": resourceThemeLightlPng,
 			"darkTheme":  resourceDarckThemePng,
 			"plumberFix": resourcePlumberFixJpg,
+			"client":     resourceClientJpg,
 			// Add more icons here as needed:
 			// "home":     resourceHomePng,
 			// "settings": resourceSettingsPng,

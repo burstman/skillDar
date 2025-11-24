@@ -22,7 +22,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	headerTitle1.TextSize = 18
 	headerTitle1.TextStyle = fyne.TextStyle{Bold: true}
 
-	headerBox := container.NewVBox(
+	headerBox := container.NewHBox(
 		iconLabel,
 		headerTitle1,
 	)
@@ -43,16 +43,20 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 		state.ShowScreen("main")
 	})
 
-	skilledWorkerBox := container.NewVBox(
-		container.NewCenter(skilledWorkerHeader),
-		container.NewCenter(skilledWorkerDesc),
-		skilledWorkerBtn,
-	)
-
 	// Decorative image
 	plumberImage := canvas.NewImageFromResource(state.GetImage("plumberFix"))
 	plumberImage.FillMode = canvas.ImageFillContain
-	plumberImage.SetMinSize(fyne.NewSize(390, 220))
+	plumberImage.SetMinSize(fyne.NewSize(370, 150))
+
+	// Wrap image in a container to center it
+	imageContainerWorker := container.NewCenter(plumberImage)
+
+	skilledWorkerBox := container.NewVBox(
+		container.NewCenter(skilledWorkerHeader),
+		container.NewCenter(skilledWorkerDesc),
+		container.NewCenter(skilledWorkerBtn),
+		container.NewCenter(imageContainerWorker),
+	)
 
 	// Client section
 	clientIcon := widget.NewLabel("🏠")
@@ -70,21 +74,25 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 		state.ShowScreen("main")
 	})
 
+	clientImage := canvas.NewImageFromResource(state.GetImage("client"))
+	clientImage.FillMode = canvas.ImageFillContain
+	clientImage.SetMinSize(fyne.NewSize(370, 150))
+
 	clientBox := container.NewVBox(
-		clientHeader,
-		clientDesc,
-		clientBtn,
+		container.NewCenter(clientHeader),
+		container.NewCenter(clientDesc),
+		container.NewCenter(clientBtn),
+		container.NewCenter(clientImage),
 	)
 
 	// Main scrollable layout
 	content := container.NewVBox(
-		headerBox,
-		//layout.NewSpacer(),
+		container.NewCenter(headerBox),
 		skilledWorkerBox,
-		//layout.NewSpacer(),
-		plumberImage,
 		layout.NewSpacer(),
 		clientBox,
+		layout.NewSpacer(),
+		layout.NewSpacer(),
 	)
 
 	// Wrap in scroll container for mobile-like experience

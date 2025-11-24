@@ -19,7 +19,7 @@ func CreateWelcomeScreen(state AppState) fyne.CanvasObject {
 	subtitle.Alignment = fyne.TextAlignCenter
 
 	getStartedBtn := widget.NewButton("Get Started", func() {
-		state.ShowScreen("choice")
+		state.ShowScreen("login")
 	})
 
 	// Layout - vertically stacked with spacers for centering
