@@ -22,6 +22,8 @@ func CreateWelcomeScreen(state AppState) fyne.CanvasObject {
 		state.ShowScreen("login")
 	})
 
+	getStartedBtn.Importance = widget.HighImportance
+
 	// Layout - vertically stacked with spacers for centering
 	content := container.NewVBox(
 		title,

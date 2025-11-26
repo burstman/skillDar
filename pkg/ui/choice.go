@@ -42,6 +42,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	skilledWorkerBtn := widget.NewButton("I am a Skilled Worker", func() {
 		state.ShowScreen("main")
 	})
+	skilledWorkerBtn.Importance = widget.HighImportance
 
 	// Decorative image
 	plumberImage := canvas.NewImageFromResource(state.GetImage("plumberFix"))
@@ -73,6 +74,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	clientBtn := widget.NewButton("I am a Client", func() {
 		state.ShowScreen("main")
 	})
+	clientBtn.Importance = widget.HighImportance
 
 	clientImage := canvas.NewImageFromResource(state.GetImage("client"))
 	clientImage.FillMode = canvas.ImageFillContain

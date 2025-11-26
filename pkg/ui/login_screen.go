@@ -35,7 +35,7 @@ func CreateLoginScreen(state AppState) fyne.CanvasObject {
 			state.ShowScreen("choice")
 		}
 	})
-
+	loginBtn.Importance = widget.HighImportance
 	content := container.NewVBox(
 		layout.NewSpacer(),
 		title,
