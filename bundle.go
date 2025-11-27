@@ -8,6 +8,13 @@ import (
 	"fyne.io/fyne/v2"
 )
 
+//go:embed assets/SkillDarLogo.png
+var resourceSkillDarLogoPngData []byte
+var resourceSkillDarLogoPng = &fyne.StaticResource{
+	StaticName:    "assets/SkillDarLogo.png",
+	StaticContent: resourceSkillDarLogoPngData,
+}
+
 //go:embed assets/client.jpg
 var resourceClientJpgData []byte
 var resourceClientJpg = &fyne.StaticResource{
@@ -27,13 +34,6 @@ var resourcePlumberFixJpgData []byte
 var resourcePlumberFixJpg = &fyne.StaticResource{
 	StaticName:    "assets/plumberFix.jpg",
 	StaticContent: resourcePlumberFixJpgData,
-}
-
-//go:embed assets/skilldar.png
-var resourceSkilldarPngData []byte
-var resourceSkilldarPng = &fyne.StaticResource{
-	StaticName:    "assets/skilldar.png",
-	StaticContent: resourceSkilldarPngData,
 }
 
 //go:embed assets/skillworkers.jpg

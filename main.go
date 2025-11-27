@@ -109,7 +109,7 @@ func main() {
 			"darkTheme":  resourceDarckThemePng,
 			"plumberFix": resourcePlumberFixJpg,
 			"client":     resourceClientJpg,
-			"logoImage":  resourceSkilldarPng,
+			"logoImage":  resourceSkillDarLogoPng,
 			// Add more icons here as needed:
 			// "home":     resourceHomePng,
 			// "settings": resourceSettingsPng,

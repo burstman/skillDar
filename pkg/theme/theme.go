@@ -7,7 +7,7 @@ import (
 	"fyne.io/fyne/v2/theme"
 )
 
-type skillKonnectTheme struct {
+type SkillKonnectTheme struct {
 	variant fyne.ThemeVariant
 }
 
@@ -17,11 +17,11 @@ type skillKonnectTheme struct {
 //	NewSkillKonnectTheme(theme.VariantLight)  // Light theme
 //	NewSkillKonnectTheme(theme.VariantDark)   // Dark theme
 func NewSkillKonnectTheme(variant fyne.ThemeVariant) fyne.Theme {
-	return skillKonnectTheme{variant: variant}
+	return SkillKonnectTheme{variant: variant}
 }
 
 // Color lets you override specific named colors.
-func (t skillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+func (t SkillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	switch name {
 	case theme.ColorNamePrimary:
 		return color.RGBA{R: 0x28, G: 0x7D, B: 0xF7, A: 0xFF} // brand blue
@@ -40,14 +40,14 @@ func (t skillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVar
 	return theme.DefaultTheme().Color(name, t.variant)
 }
 
-func (t skillKonnectTheme) Font(style fyne.TextStyle) fyne.Resource {
+func (t SkillKonnectTheme) Font(style fyne.TextStyle) fyne.Resource {
 	return theme.DefaultTheme().Font(style)
 }
 
-func (t skillKonnectTheme) Size(name fyne.ThemeSizeName) float32 {
+func (t SkillKonnectTheme) Size(name fyne.ThemeSizeName) float32 {
 	return theme.DefaultTheme().Size(name)
 }
 
-func (t skillKonnectTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+func (t SkillKonnectTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 	return theme.DefaultTheme().Icon(name)
 }
