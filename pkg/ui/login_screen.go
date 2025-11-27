@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"net/url"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -36,6 +37,53 @@ func CreateLoginScreen(state AppState) fyne.CanvasObject {
 		}
 	})
 	loginBtn.Importance = widget.HighImportance
+
+	// Divider
+	orLabel := widget.NewLabel("────── OR ──────")
+	orLabel.Alignment = fyne.TextAlignCenter
+
+	// Facebook login button
+	facebookBtn := widget.NewButton("Continue with Facebook", func() {
+		fmt.Println("Opening Facebook OAuth...")
+		// Facebook OAuth URL (replace with your app credentials)
+		clientID := "YOUR_FACEBOOK_APP_ID"
+		redirectURI := "http://localhost:8080/auth/facebook/callback"
+
+		facebookAuthURL := fmt.Sprintf(
+			"https://www.facebook.com/v12.0/dialog/oauth?client_id=%s&redirect_uri=%s&scope=email,public_profile",
+			clientID,
+			url.QueryEscape(redirectURI),
+		)
+
+		authURL, _ := url.Parse(facebookAuthURL)
+		fyne.CurrentApp().OpenURL(authURL)
+
+		// TODO: Set up callback server to receive the auth code
+		// For now, just navigate to choice screen for testing
+		// state.ShowScreen("choice")
+	})
+
+	// Google login button
+	googleBtn := widget.NewButton("Continue with Google", func() {
+		fmt.Println("Opening Google OAuth...")
+		// Google OAuth URL (replace with your app credentials)
+		clientID := "YOUR_GOOGLE_CLIENT_ID"
+		redirectURI := "http://localhost:8080/auth/google/callback"
+
+		googleAuthURL := fmt.Sprintf(
+			"https://accounts.google.com/o/oauth2/v2/auth?client_id=%s&redirect_uri=%s&response_type=code&scope=email%%20profile",
+			clientID,
+			url.QueryEscape(redirectURI),
+		)
+
+		authURL, _ := url.Parse(googleAuthURL)
+		fyne.CurrentApp().OpenURL(authURL)
+
+		// TODO: Set up callback server to receive the auth code
+		// For now, just navigate to choice screen for testing
+		// state.ShowScreen("choice")
+	})
+
 	content := container.NewVBox(
 		layout.NewSpacer(),
 		title,
@@ -43,6 +91,9 @@ func CreateLoginScreen(state AppState) fyne.CanvasObject {
 		emailEntry,
 		passwordEntry,
 		loginBtn,
+		orLabel,
+		facebookBtn,
+		googleBtn,
 		layout.NewSpacer(),
 	)
 

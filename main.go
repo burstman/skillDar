@@ -23,6 +23,7 @@ type AppState struct {
 	isDarkTheme bool
 	screens     map[string]fyne.CanvasObject
 	icons       map[string]fyne.Resource // Map of all app icons
+	userRole    string                   // "client" or "worker"
 }
 
 // ShowScreen displays a screen by name with the top bar
@@ -79,6 +80,17 @@ func (as *AppState) GetImage(name string) fyne.Resource {
 	return as.icons[name]
 }
 
+// SetUserRole sets the user role (client or worker)
+func (as *AppState) SetUserRole(role string) {
+	as.userRole = role
+	fmt.Println("User role set to:", role)
+}
+
+// GetUserRole returns the current user role
+func (as *AppState) GetUserRole() string {
+	return as.userRole
+}
+
 func main() {
 	// Create the app
 	a := app.New()
@@ -97,6 +109,7 @@ func main() {
 			"darkTheme":  resourceDarckThemePng,
 			"plumberFix": resourcePlumberFixJpg,
 			"client":     resourceClientJpg,
+			"logoImage":  resourceSkilldarPng,
 			// Add more icons here as needed:
 			// "home":     resourceHomePng,
 			// "settings": resourceSettingsPng,
@@ -113,6 +126,8 @@ func main() {
 	state.screens["login"] = uiscreen.CreateLoginScreen(state)
 	state.screens["main"] = uiscreen.CreateMainScreen(state)
 	state.screens["profile"] = uiscreen.CreateProfileScreen(state)
+	state.screens["edit_profile_client"] = uiscreen.CreateEditProfileClientScreen(state)
+	state.screens["edit_profile_worker"] = uiscreen.CreateEditProfileWorkerScreen(state)
 
 	// Show welcome screen first
 	state.ShowScreen("welcome")

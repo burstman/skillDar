@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
@@ -24,11 +25,20 @@ func CreateWelcomeScreen(state AppState) fyne.CanvasObject {
 
 	getStartedBtn.Importance = widget.HighImportance
 
+	//sigle image
+
+	logoImage := canvas.NewImageFromResource(state.GetImage("logoImage"))
+	logoImage.FillMode = canvas.ImageFillContain
+	logoImage.SetMinSize(fyne.NewSize(270, 200))
+
+	logoContainer := container.NewCenter(logoImage)
+
 	// Layout - vertically stacked with spacers for centering
 	content := container.NewVBox(
 		title,
 		subtitle,
-		layout.NewSpacer(),
+		logoContainer,
+		//layout.NewSpacer(),
 		getStartedBtn,
 		layout.NewSpacer(),
 		layout.NewSpacer(),

@@ -40,6 +40,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	skilledWorkerDesc := widget.NewLabel("Find job opportunities and connect\nwith clients.")
 
 	skilledWorkerBtn := widget.NewButton("I am a Skilled Worker", func() {
+		state.SetUserRole("worker")
 		state.ShowScreen("main")
 	})
 	skilledWorkerBtn.Importance = widget.HighImportance
@@ -72,6 +73,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 	clientDesc := widget.NewLabel("Find reliable professionals for your\nhome projects.")
 
 	clientBtn := widget.NewButton("I am a Client", func() {
+		state.SetUserRole("client")
 		state.ShowScreen("main")
 	})
 	clientBtn.Importance = widget.HighImportance

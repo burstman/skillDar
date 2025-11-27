@@ -7,4 +7,6 @@ import "fyne.io/fyne/v2"
 type AppState interface {
 	ShowScreen(screenName string)
 	GetImage(name string) fyne.Resource
+	SetUserRole(role string)
+	GetUserRole() string
 }

@@ -14,7 +14,11 @@ func CreateMainScreen(state AppState) fyne.CanvasObject {
 	title.TextStyle = fyne.TextStyle{Bold: true}
 
 	profileBtn := widget.NewButton("Go to Profile", func() {
-		state.ShowScreen("profile")
+		if state.GetUserRole() == "worker" {
+			state.ShowScreen("edit_profile_worker")
+			return
+		}
+		state.ShowScreen("edit_profile_client")
 	})
 
 	logoutBtn := widget.NewButton("Logout", func() {
