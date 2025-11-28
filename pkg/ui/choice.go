@@ -41,7 +41,7 @@ func CreateChoiceScreen(state AppState) fyne.CanvasObject {
 
 	skilledWorkerBtn := widget.NewButton("I am a Skilled Worker", func() {
 		state.SetUserRole("worker")
-		state.ShowScreen("main")
+		state.ShowScreen("client_post_job")
 	})
 	skilledWorkerBtn.Importance = widget.HighImportance
 

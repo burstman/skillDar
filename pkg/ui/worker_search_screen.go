@@ -118,7 +118,60 @@ func CreateWorkerSearchScreen(state AppState) fyne.CanvasObject {
 
 	scroll := container.NewScroll(content)
 
-	return container.NewPadded(scroll)
+	// Bottom navigation bar
+	bottomNav := createBottomNavForClient(state)
+
+	// Main layout with bottom navigation
+	mainLayout := container.NewBorder(
+		nil,       // top
+		bottomNav, // bottom
+		nil,       // left
+		nil,       // right
+		scroll,    // center
+	)
+
+	return mainLayout
+}
+
+// createBottomNavForClient creates bottom navigation for client screens
+func createBottomNavForClient(state AppState) fyne.CanvasObject {
+	// Navigation bar background
+	navBg := canvas.NewRectangle(color.RGBA{245, 245, 245, 255})
+
+	// Create navigation buttons
+	homeBtn := widget.NewButton("🏠\nHome", func() {
+		state.ShowScreen("worker_search_screen")
+	})
+	homeBtn.Importance = widget.HighImportance
+
+	ordersBtn := widget.NewButton("📋\nOrders", func() {
+		// TODO: Navigate to orders screen
+	})
+
+	chatBtn := widget.NewButton("💬\nChat", func() {
+		// TODO: Navigate to chat screen
+	})
+
+	profileBtn := widget.NewButton("👤\nProfile", func() {
+		state.ShowScreen("edit_profile_client")
+	})
+
+	navButtons := container.NewHBox(
+		layout.NewSpacer(),
+		homeBtn,
+		layout.NewSpacer(),
+		ordersBtn,
+		layout.NewSpacer(),
+		chatBtn,
+		layout.NewSpacer(),
+		profileBtn,
+		layout.NewSpacer(),
+	)
+
+	return container.NewStack(
+		navBg,
+		container.NewPadded(navButtons),
+	)
 }
 
 // createCategoryCard creates a card for a professional category

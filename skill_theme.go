@@ -7,12 +7,12 @@ import (
 	"fyne.io/fyne/v2/theme"
 )
 
-// skillKonnectTheme is a minimal custom theme that forces a light appearance for key elements
+// SkillKonnectTheme is a minimal custom theme that forces a light appearance for key elements
 // while delegating all other values to Fyne's default theme. Keep it small so future Fyne
 // changes won't require large rewrites.
-type skillKonnectTheme struct{}
+type SkillKonnectTheme struct{}
 
-func (skillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+func (SkillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	switch name {
 	case theme.ColorNamePrimary:
 		return color.RGBA{R: 0x28, G: 0x7D, B: 0xF7, A: 0xFF} // brand blue
@@ -32,14 +32,14 @@ func (skillKonnectTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVaria
 	return theme.DefaultTheme().Color(name, variant)
 }
 
-func (skillKonnectTheme) Font(style fyne.TextStyle) fyne.Resource {
+func (SkillKonnectTheme) Font(style fyne.TextStyle) fyne.Resource {
 	return theme.DefaultTheme().Font(style)
 }
 
-func (skillKonnectTheme) Size(name fyne.ThemeSizeName) float32 {
+func (SkillKonnectTheme) Size(name fyne.ThemeSizeName) float32 {
 	return theme.DefaultTheme().Size(name)
 }
 
-func (skillKonnectTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+func (SkillKonnectTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 	return theme.DefaultTheme().Icon(name)
 }
